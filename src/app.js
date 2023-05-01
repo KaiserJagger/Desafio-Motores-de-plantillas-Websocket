@@ -39,6 +39,7 @@ socketServer.on("connection", (socketClient) => {
             socketClient.emit("error", result);
         } else {
             socketServer.emit("products", prod.getProducts());
+            socketClient.emit("result", "Producto eliminado");
         }
     });
     socketClient.on("addProd", (product) => {
@@ -48,6 +49,7 @@ socketServer.on("connection", (socketClient) => {
             socketClient.emit("error", result);
         } else {
             socketServer.emit("products", prod.getProducts());
+            socketClient.emit("result", "Producto agregado");
         }
     });
 });

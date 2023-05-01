@@ -66,3 +66,6 @@ socketClient.on("error", (errores) => {
     });
     alert(errorestxt);
 });
+socketClient.on("result", (reaultado) => {
+    alert(reaultado);
+});
