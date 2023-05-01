@@ -1,15 +1,26 @@
 const socketClient = io();
 
-const forms = document.querySelectorAll("form");
-forms.forEach((form) => {
-    form.addEventListener("submit", (ev) => {
+// Asigno
+const addform = document.querySelector("#addproduct");
+addform.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    // emito un evento para agragar el producto
+    socketClient.emit("addProd", ev.currentTarget.prodjson.value);
+});
+// busco busco todos los botones para borrar el producto
+const deletebutton = document.querySelectorAll(".deleteproduct");
+deletebutton.forEach((button) => {
+    button.addEventListener("click", (ev) => {
         ev.preventDefault();
-        console.log(ev.currentTarget.id.value);
-        socketClient.emit("deleteProd", ev.currentTarget.id.value);
+        socketClient.emit(
+            "deleteProd",
+            ev.currentTarget.getAttribute("prodid"),
+        );
     });
 });
 socketClient.on("products", (productos) => {
-    let innerHtml = ""
+    let innerHtml = "";
+    // creo el html para reemplazar los productos en realTimeProducts
     productos.forEach((producto) => {
         innerHtml += `
         <div id="product${producto.id}">
@@ -26,21 +37,32 @@ socketClient.on("products", (productos) => {
             <p>Status: ${producto.status}</p>
             <p>Código: ${producto.code}</p>
             <p>Stock: ${producto.stock}</p>
-            <form>
-            <input type="hidden" name="id" value="${producto.id}"/>
-            <button type="submit">Borrar este producto</button>
-            </form>
+            <input
+                type="button"
+                class="deleteproduct"
+                prodid="${producto.id}"
+                value="Borrar este producto"
+            />
             </div>
-            `
-        });
-        document.querySelector('#realtimeproducts').innerHTML = innerHtml
-        const forms = document.querySelectorAll("form");
-        forms.forEach((form) => {
-            form.addEventListener("submit", (ev) => {
-                ev.preventDefault();
-                console.log(ev.currentTarget.id.value);
-                socketClient.emit("deleteProd", ev.currentTarget.id.value);
-            });
+            `;
+    });
+    document.querySelector("#realtimeproducts").innerHTML = innerHtml;
+    // busco todos los botones para borrar el producto
+    const deletebutton = document.querySelectorAll(".deleteproduct");
+    deletebutton.forEach((button) => {
+        button.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            socketClient.emit(
+                "deleteProd",
+                ev.currentTarget.getAttribute("prodid"),
+            );
         });
     });
-    
+});
+socketClient.on("error", (errores) => {
+    let errorestxt = "ERROR\r";
+    errores.errortxt.forEach((error) => {
+        errorestxt += error + "\r";
+    });
+    alert(errorestxt);
+});

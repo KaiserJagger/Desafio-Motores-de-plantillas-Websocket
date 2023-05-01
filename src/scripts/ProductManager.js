@@ -90,9 +90,9 @@ class ProductManager {
                 stock,
             };
             this.#products.push(product);
-            const saveProducts = async () => {
+            const saveProducts = () => {
                 try {
-                    const filewriten = await fs.promises.writeFile(
+                    const filewriten = fs.promises.writeFile(
                         this.#path,
                         JSON.stringify(this.#products)
                     );

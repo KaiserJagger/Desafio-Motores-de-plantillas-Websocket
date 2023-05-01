@@ -1,4 +1,10 @@
 <h3>Productos en tiempo real</h3>
+<form id="addproduct">
+    <h4>Agregar producto JSON</h4>
+    <textarea name="prodjson" id="prodjson" cols="20" rows="5"></textarea>
+    <button type="submit">Enviar</button>
+</form>
+
 <div id="realtimeproducts">
     {{#each products}}
         <div id="product{{this.id}}">
@@ -15,10 +21,12 @@
             <p>Status: {{this.status}}</p>
             <p>Código: {{this.code}}</p>
             <p>Stock: {{this.stock}}</p>
-            <form>
-                <input type="hidden" name="id" value="{{this.id}}"/>
-                <button type="submit">Borrar este producto</button>
-            </form>
+            <input
+                type="button"
+                class="deleteproduct"
+                prodid="{{this.id}}"
+                value="Borrar este producto"
+            />
         </div>
     {{/each}}
 </div>

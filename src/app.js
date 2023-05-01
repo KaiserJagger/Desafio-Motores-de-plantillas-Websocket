@@ -34,9 +34,20 @@ socketServer.on("connection", (socketClient) => {
     const prod = new ProductManager("./src/data/productos.json");
     console.log("cliente conectado");
     socketClient.on("deleteProd", (prodId) => {
-        console.log(prodId);
         const result = prod.deleteProduct(prodId);
-        console.log(result);
-        socketServer.emit("products", prod.getProducts());
+        if (result.error) {
+            socketClient.emit("error", result);
+        } else {
+            socketServer.emit("products", prod.getProducts());
+        }
+    });
+    socketClient.on("addProd", (product) => {
+        const producto= JSON.parse(product)
+        const result = prod.addProduct(producto);
+        if (result.error) {
+            socketClient.emit("error", result);
+        } else {
+            socketServer.emit("products", prod.getProducts());
+        }
     });
 });
