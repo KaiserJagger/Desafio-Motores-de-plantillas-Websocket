@@ -196,9 +196,9 @@ class ProductManager {
             return { error: 2, errortxt: "el producto no existe" };
         } else {
             this.#products.splice(found, 1);
-            const saveProducts = async () => {
+            const saveProducts = () => {
                 try {
-                    const filewriten = await fs.promises.writeFile(
+                    const filewriten = fs.promises.writeFile(
                         this.#path,
                         JSON.stringify(this.#products)
                     );

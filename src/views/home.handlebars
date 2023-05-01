@@ -1,0 +1,14 @@
+<h3>Productos</h3>
+{{#each products}}
+    <div>
+        <h4>{{this.title}}</h4>
+        <img src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.thumbnails}}"  alt="foto producto" width="100">
+        <p>{{this.description}}</p>
+        <p>Precio: ${{this.price}}</p>
+        <p>Categoría: {{this.category}}</p>
+        <p>Imagen: {{this.thumbnails}}</p>
+        <p>Status: {{this.status}}</p>
+        <p>Código: {{this.code}}</p>
+        <p>Stock: {{this.stock}}</p>
+    </div>
+{{/each}}

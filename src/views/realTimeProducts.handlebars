@@ -1,0 +1,26 @@
+<h3>Productos en tiempo real</h3>
+<div id="realtimeproducts">
+    {{#each products}}
+        <div id="product{{this.id}}">
+            <h4>{{this.title}}</h4>
+            <img
+                src="https://sinteplastconstruccion.com.ar/assets/img/sinteplastconstruccion.com.ar/photos/w300/{{this.thumbnails}}"
+                alt="foto producto"
+                width="100"
+            />
+            <p>{{this.description}}</p>
+            <p>Precio: ${{this.price}}</p>
+            <p>Categoría: {{this.category}}</p>
+            <p>Imagen: {{this.thumbnails}}</p>
+            <p>Status: {{this.status}}</p>
+            <p>Código: {{this.code}}</p>
+            <p>Stock: {{this.stock}}</p>
+            <form>
+                <input type="hidden" name="id" value="{{this.id}}"/>
+                <button type="submit">Borrar este producto</button>
+            </form>
+        </div>
+    {{/each}}
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../scripts/socketClient.js"></script>
